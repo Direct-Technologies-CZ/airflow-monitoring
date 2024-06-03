@@ -1,20 +1,20 @@
 from .airflow_api import AirflowApi
-from .db.connection import get_db_session, create_db
+from .db.connection import create_db, get_db_session
 from .http_session import get_session
+from .logs import get_logger
 from .saver import Saver
 from .settings import (
     AIRFLOW_PASSWORD,
     AIRFLOW_URL,
     AIRFLOW_USER,
-    USER_AGENT,
-    PSQL_CONN,
-    PSQL_ROLE,
     IS_DEBUG,
     IS_LOCAL,
+    PSQL_CONN,
+    PSQL_ROLE,
+    SAVE_MAX_DAG_RUNS,
     SLEEP_AFTER_DAG,
-    SAVE_MAX_DAG_RUNS
+    USER_AGENT,
 )
-from .logs import get_logger
 
 # Prepare logging
 is_debug = IS_LOCAL or IS_DEBUG
