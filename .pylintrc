@@ -1,0 +1,21 @@
+[MASTER]
+# jobs=0 means 'use all CPUs'
+jobs=0
+
+[MESSAGES CONTROL]
+disable =
+  line-too-long,  # black takes care of this
+  missing-docstring,  # disabled in favor of pydocstyle
+  too-few-public-methods,   # my class, my rules
+  protected-access,  # I need this for tests
+
+[REPORTS]
+output-format=colorized
+
+[FORMAT]
+logging-modules=
+  logging,
+  structlog,
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=e,f

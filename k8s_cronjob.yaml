@@ -1,0 +1,40 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: airflow-monitoring
+  namespace: reporting
+spec:
+  schedule: "5 12 * * *"
+  timeZone: "Europe/Prague"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: airflow-monitoring
+              image: <pathToImage>
+              imagePullPolicy: Always
+              env:
+                - name: PSQL
+                  valueFrom:
+                    secretKeyRef:
+                      name: reporting-secret
+                      key: reporting-psql
+                - name: AIRFLOW_USER
+                  value: "<user>"
+                - name: AIRFLOW_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: reporting-secret
+                      key: airflow-password
+                - name: AIRFLOW_URL
+                  value: "<apiUrl>"
+                - name: USER_AGENT
+                  value: "reporting airflow_monitoring"
+                - name: ENVIRONMENT
+                  value: "production"
+              args: ["poetry", "run", "python", "-m", "airflow_monitoring.main"]
+
+---

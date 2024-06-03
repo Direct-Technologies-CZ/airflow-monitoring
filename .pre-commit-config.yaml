@@ -1,0 +1,64 @@
+default_language_version:
+  python: python3.11
+
+default_stages: [commit, manual]
+
+exclude: ^(.*\.json)|(.*\.html)$
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^.*\.md$
+      - id: end-of-file-fixer
+      - id: debug-statements
+      - id: check-merge-conflict
+
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/ambv/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+
+  - repo: https://github.com/PyCQA/pylint
+    rev: v3.2.2
+    hooks:
+      - id: pylint
+        additional_dependencies: [".[pyproject]"]
+        exclude: ^(docs/).*$
+        # Disabled import-error as it may run out of environment with deps.
+        args: ["--disable=import-error"]
+
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        # D100-D107 ignore missing docstrings
+        # D203 disabled in favor of D211
+        # D213 disabled in favor of D212
+        # D406, D407, D408, D409, D413 disabled because we use Google convention.
+        args: ["--ignore=D100,D101,D102,D103,D104,D105,D106,D107,D203,D213,D406,D407,D408,D409"]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.8
+    hooks:
+      - id: bandit
+        exclude: test/
+        # B101 - Test for use of assert - we don't generate pyo files
+        # B104 - Possible binding to all interfaces - needed for local docker development
+        args: ["--skip=B101,B104"]

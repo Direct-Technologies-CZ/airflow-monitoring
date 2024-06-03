@@ -1,0 +1,5 @@
+*
+!airflow_monitoring
+!test
+!poetry.lock
+!pyproject.toml

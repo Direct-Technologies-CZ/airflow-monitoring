@@ -1,0 +1,26 @@
+version: "3.9"
+volumes:
+  venv:
+  postgres:
+services:
+  app:
+    image: airflow-monitoring
+    build: .
+    volumes:
+      - .:/app
+      - venv:/app/.venv/  # don't use local venv in container
+    env_file:
+      - .env
+    environment:
+      ENVIRONMENT: local
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=sample
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 # if you want to connect from your host
