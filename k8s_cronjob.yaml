@@ -14,7 +14,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: airflow-monitoring
-              image: <pathToImage>
+              image: ghcr.io/direct-technologies-cz/airflow-monitoring:sha256-06e238a437f43d78cbb8c03e173fe94c49123e023ce0e64053b312c172f5a69d.sig
               imagePullPolicy: Always
               env:
                 - name: PSQL

@@ -31,7 +31,7 @@ The app checks the `end_date` of the newest saved run for each DAG and saves onl
 
 ### Production deployment
 
-Use the provided `Dockerfile` to build image and store it to an image registry. Or use this image: 
+Use the provided `Dockerfile` to build image and store it to an image registry. Or use image address (`ghcr.io/direct-technologies-cz/airflow-monitoring:sha...`) from [here](https://github.com/Direct-Technologies-CZ/airflow-monitoring/pkgs/container/airflow-monitoring).
 
 Use the image to run the main script like this: 
 ```
