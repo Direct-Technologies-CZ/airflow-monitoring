@@ -9,7 +9,7 @@ RUN \
     apt-get install -y --no-install-recommends tini && \
     apt-get install -y curl &&\
     pip install -U pip &&\
-    pip install poetry &&\
+    pip install poetry==1.8.3 &&\
     poetry config virtualenvs.create true &&\
     poetry config virtualenvs.in-project true
 
