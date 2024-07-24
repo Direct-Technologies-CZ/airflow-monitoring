@@ -15,7 +15,7 @@ The app checks the `end_date` of the newest saved run for each DAG and saves onl
 #### Mandatory
 
 * `PSQL`: Connection string to PostgreSQL DB instance in format: `postgresql://<user>:<password>@<host>:<port>/<db_name>`
-* `AIRFLOW_USER` and `AIRFLOW_PASSWORD`: You can create the user via [API call](https://ip-airflow.triglav.local/api/v1/ui/#/User/post_user), role is `Viewer`.
+* `AIRFLOW_USER` and `AIRFLOW_PASSWORD`: You can create the user via [API call](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html#operation/post_user), role is `Viewer`.
 * `AIRFLOW_URL`: Link to API, example: `https://host.domain/api/v1/`
 * `USER_AGENT`: Depends on you, suggested format: `team_name app_name`
 * `ENVIRONMENT`: `local` or `production`
@@ -31,7 +31,7 @@ The app checks the `end_date` of the newest saved run for each DAG and saves onl
 
 ### Production deployment
 
-Use the provided `Dockerfile` to build image and store it to an image registry. Or use image address (`ghcr.io/direct-technologies-cz/airflow-monitoring:sha...`) from [here](https://github.com/Direct-Technologies-CZ/airflow-monitoring/pkgs/container/airflow-monitoring).
+Use the provided `Dockerfile` to build image and store it to an image registry. Or use the image from [Github Registry](https://github.com/Direct-Technologies-CZ/airflow-monitoring/pkgs/container/airflow-monitoring) - the URL is `ghcr.io/direct-technologies-cz/airflow-monitoring:<version>`. As `version` use either `main` for the latest or `sha256-xxx` for a signed concrete version if you want to be extra safe. The new version is generated either on a new commit to master or once per year in January.
 
 Use the image to run the main script like this: 
 ```
@@ -77,6 +77,8 @@ You can also use `save_only_dag` variable to save data only for a specific DAG (
 
 ### Implementation
 First, the script uses [dags](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html#tag/DAG) endpoint to get all DAGs. Then for each DAG, it gets [dagRuns](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html#tag/DAGRun) sorted by `end_date` from the latest, where `end_date` is higher than the newest `dagRun` saved in the DB for given `DAG`. Lastly, it gets [taskInstances](https://airflow.apache.org/docs/apache-airflow/stable/stable-rest-api-ref.html#tag/TaskInstance) for given `dagRun` and saves them as well.
+
+NOTICE: There is no paging for the `taskInstances` - the API returns 100 items by default, which should be enough for most cases. If needed, you can update [the code here](https://github.com/Direct-Technologies-CZ/airflow-monitoring/blob/33399e983036d3535d9664294e1d2dea4b1c6d05/airflow_monitoring/airflow_api.py#L98).
 
 ## Development 
 
