@@ -27,7 +27,7 @@ The app checks the `end_date` of the newest saved run for each DAG and saves onl
 * `PSQL_SCHEMA`: default is `public` 
 * `SAVE_MAX_DAG_RUNS`: default is 1000
 * `SLEEP_AFTER_DAG`: how long to wait between DAGs processing. default is 0.5 seconds.
-* `IS_DEBUG`: if set to anything, logger prints text instead of JSON.
+* `IS_DEBUG`: if set to anything, logger prints text instead of JSON
 
 ### Production deployment
 
