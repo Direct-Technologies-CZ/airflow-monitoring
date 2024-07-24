@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "airflow_monitoring"
 version = "0.1.0"
-description = ""
+description = "Save info about Airflow's DAG runs and tasks to database"
 authors = ["Jonas Petrovsky <jonas.petrovsky@direct.cz>"]
 readme = "README.md"
 
