@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: airflow-monitoring
-  namespace: reporting
+  namespace: team_name
 spec:
   schedule: "5 12 * * *"
   timeZone: "Europe/Prague"
@@ -14,25 +14,25 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: airflow-monitoring
-              image: ghcr.io/direct-technologies-cz/airflow-monitoring:sha256-06e238a437f43d78cbb8c03e173fe94c49123e023ce0e64053b312c172f5a69d.sig
+              image: ghcr.io/direct-technologies-cz/airflow-monitoring:sha-faedd0d
               imagePullPolicy: Always
               env:
                 - name: PSQL
                   valueFrom:
                     secretKeyRef:
-                      name: reporting-secret
-                      key: reporting-psql
+                      name: team_name-secret
+                      key: team_name-psql
                 - name: AIRFLOW_USER
                   value: "<user>"
                 - name: AIRFLOW_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: reporting-secret
+                      name: team_name-secret
                       key: airflow-password
                 - name: AIRFLOW_URL
                   value: "<apiUrl>"
                 - name: USER_AGENT
-                  value: "reporting airflow_monitoring"
+                  value: "team_name airflow_monitoring"
                 - name: ENVIRONMENT
                   value: "production"
               args: ["poetry", "run", "python", "-m", "airflow_monitoring.main"]
