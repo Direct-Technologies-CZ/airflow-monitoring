@@ -31,7 +31,7 @@ The app checks the `end_date` of the newest saved run for each DAG and saves onl
 
 ### Production deployment
 
-Use the provided `Dockerfile` to build image and store it to an image registry. Or use the image from [Github Registry](https://github.com/Direct-Technologies-CZ/airflow-monitoring/pkgs/container/airflow-monitoring) - the URL is `ghcr.io/direct-technologies-cz/airflow-monitoring:<version>`. As `version` use either `main` for the latest or `sha256-xxx` for a signed concrete version if you want to be extra safe. The new version is generated either on a new commit to master or once per year in January.
+Use the provided `Dockerfile` to build image and store it to an image registry. Or use the image from [Github Registry](https://github.com/Direct-Technologies-CZ/airflow-monitoring/pkgs/container/airflow-monitoring) - the URL is `ghcr.io/direct-technologies-cz/airflow-monitoring:<version>`. As `version` use either `main` for the latest or `sha-xxx` for a version based on a specific commit. A new version is generated either on a new commit to main branch or once per year in January.
 
 Use the image to run the main script like this: 
 ```
